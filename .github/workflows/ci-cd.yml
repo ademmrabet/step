@@ -21,6 +21,7 @@ jobs:
       - name: Install backend dependencies
         run: |
           cd server
+          npm install express
           npm install
 
       - name: Install frontend dependencies
