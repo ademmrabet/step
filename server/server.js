@@ -3,6 +3,10 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const connectDB = require('./config/db');
+const path = require('path')
+
+const productRoutes = require('./routes/productRoutes')
+const userRoutes = require('./routes/userRoutes');
 
 
 dotenv.config();
@@ -29,9 +33,17 @@ app.use((err, req, res, next) => {
 //Connect to MongoDB
 connectDB();
 
+
+//Database routes
+app.use('/api', productRoutes);
+app.use('/api', userRoutes)
+
 //middleware
 app.use(cors());
 app.use(express.json());
+
+//Server static files from uploads folder
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 //Default route
 app.get('/', (req, res) => {
