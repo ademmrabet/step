@@ -4,7 +4,7 @@ const  asyncHandler = require('express-async-handler');
 
 //READ
 exports.getAllUsers = asyncHandler(async (req, res) => {
-    const users = await Users.find({});
+    const users = await Users.find();
     res.status(200).json(users)
 });
 
@@ -41,6 +41,7 @@ exports.updateUser = asyncHandler(async (req, res) => {
     }
     const {name, lastName,email,phoneNumber,password} = req.body;
     user.name = name || user.name;
+    user.email = email || user.email;
     user.lastName= lastName || user.lastName;
     user.phoneNumber = phoneNumber || user.phoneNumber;
     user.password = password || user.password;

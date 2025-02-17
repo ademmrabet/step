@@ -5,8 +5,9 @@ const mongoose = require('mongoose');
 const connectDB = require('./config/db');
 const path = require('path')
 
-const productRoutes = require('./routes/productRoutes')
+const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 
 
 dotenv.config();
@@ -36,7 +37,8 @@ connectDB();
 
 //Database routes
 app.use('/api', productRoutes);
-app.use('/api', userRoutes)
+app.use('/api', userRoutes);
+app.use('/api/admins', adminRoutes);
 
 //middleware
 app.use(cors());

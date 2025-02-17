@@ -1,6 +1,5 @@
 const asyncHandler = require('express-async-handler');
 const Products = require('../models/Product');
-const Brands = require('../models/Brands');
 const Brand = require('../models/Brands');
 const Product = require('../models/Product');
 
