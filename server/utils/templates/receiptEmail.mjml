@@ -1,0 +1,121 @@
+<mjml>
+  <mj-head>
+    <mj-preview>Your Order Receipt </mj-preview>
+    <mj-style inline="inline">
+      @import
+      url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+      @media only screen and (max-width:480px) {
+      .hide-on-mobile { display: none !important; }
+    }
+    </mj-style>
+    <mj-font
+      name="Inter"
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    />
+  </mj-head>
+
+  <mj-body>
+    <mj-section background-color="black">
+      <mj-column width="30%">
+        <mj-image src="./logoWithStroke.png" />
+      </mj-column>
+      <mj-column width="70%">
+        <mj-text
+          color="white"
+          align="center"
+          font-size="45px"
+          font-family="Inter, sans-serif"
+          >Elevate your style</mj-text
+        >
+        <mj-text
+          color="white"
+          align="right"
+          font-size="25px"
+          padding-left="20px"
+          font-family="Inter, sans-serif"
+          >with Step Footwear</mj-text
+        >
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column>
+        <mj-text
+          font-size="25px"
+          align="center"
+          font-family="Courier"
+          font-weight="700"
+        >
+          Thank you for passing by our Store, {{userName}} !</mj-text
+        >
+        <mj-text
+          font-family="Courier"
+          font-size="15px"
+          font-weight="400"
+          align="center"
+          font-weight="700"
+        >
+          your Order Number is: {{orderId}}</mj-text
+        >
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column>
+        <mj-text font-family="Courier" font-size="18px" font-weight="700"
+          >Order Summary:</mj-text
+        >
+        <mj-table>
+          {{#each orderItems}}
+          <tr>
+            <td class="hide-on-mobile">{{this.image}}</td>
+            <td font-family="Courier">{{this.name}}</td>
+            <td>{{this.quantity}}</td>
+            <td>{{this.price}}</td>
+          </tr>
+          {{/each}}
+        </mj-table>
+        <mj-divider border-width="1px" />
+        <mj-text font-family="Courier" ><strong>Total:</strong></mj-text>
+        <mj-text font-family="Courier" align="right" ><strong>${{totalPrice}}</strong></mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section>
+      <mj-column>
+        <mj-text font-size="30px" font-family="Courier"
+          >We'll notify you when your order is shipped!</mj-text
+        >
+        <mj-button href="#" background-color="black" font-family="Courier"
+          >Track Order</mj-button
+        >
+        <mj-divider border-width="2px" border-color="grey" />
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column width="100%">
+        <mj-text font-family="Courier" align="center" font-weight="700" font-size="20px">
+          Follow Us on Social media for <strong>More Updates</strong></mj-text
+        >
+      </mj-column>
+      <mj-column width="33%">
+        <mj-image
+          src="./tiktok.png"
+          alt="tiktok"
+          width="30px"
+          href="https://www.tiktok.com/"
+          align="center"
+        />
+      </mj-column>
+      <mj-column width="33%">
+        <mj-image
+             src="./instagram.jpg"
+             alt=""
+             width="30px" align="center" href="https://www.instagram.com"/>
+      </mj-column>
+      <mj-column width="33%">
+        <mj-social icon-size="30px">
+        <mj-social-element name="facebook" href="https://www.facebook.com"/>
+        </mj-social>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

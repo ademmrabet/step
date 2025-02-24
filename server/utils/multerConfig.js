@@ -4,10 +4,17 @@ const path = require('path');
 //configuration de stockage pour l'upload des images
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/'); //save files to uploads directory
+        // Check request path to determine upload folder
+        if (req.baseUrl.includes('/api/brands')) {
+            cb(null, 'uploads/brands/'); // Save logos in 'uploads/brands/'
+        } else if (req.baseUrl.includes('/api/products')) {
+            cb(null, 'uploads/products/'); // Save product images in 'uploads/products/'
+        } else {
+            cb(null, 'uploads/'); // Default folder
+        }
     },
     filename: function (req, file, cb) {
-        cb(null, file.filename + '-' + Date.now() + path.extname(file.originalname));
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
     }
 });
 

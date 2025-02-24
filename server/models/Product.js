@@ -5,7 +5,11 @@ const productSchema =  new mongoose.Schema({
     productName : {type:String, required:true},
     productImg:{type:[String], required: true},
     description : {type:String, required: true},
-    brand: {type:String, required: true, ref:'Brands'},
+    brand: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true, 
+        ref: 'Brand' 
+    },
     price: {type:Number, required:true, default:0},
     countInStock: {type:Number, required: true, default:0},
     createdAt:{type:Date,default:Date.now}

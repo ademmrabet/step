@@ -5,28 +5,25 @@ const brandSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        index:true
+        index: true
     },
     brandName: {
         type: String,
         required: true,
-        unique: true, // Ensure brand names are unique
+        unique: true
     },
     logo: {
-        type: String, // Single URL for the logo (unless you need multiple logos)
-        required: true,
+        type: String,
+        required: true
     },
     description: {
-        type: String, // Optional description for the brand
+        type: String
     },
     createdAt: {
         type: Date,
-        default: Date.now, // Automatically record when the brand was created
-    },
+        default: Date.now
+    }
 });
 
-// Create the Brand model
-const Brand = mongoose.model('Brand', brandSchema);
-
-// Export the Brand model
-module.exports = Brand;
+// ✅ Export the model
+module.exports = mongoose.model('Brand', brandSchema);

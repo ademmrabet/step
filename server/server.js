@@ -8,10 +8,18 @@ const path = require('path')
 const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const discountRoutes = require('./routes/discountRoutes');
+const brandRoutes = require('./routes/brandRoutes');
+const orderRoutes = require('./routes/orderRoutes')
 
 
 dotenv.config();
 const app = express();
+
+//middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Example route that throws an error
 app.get('/error', (req, res, next) => {
@@ -36,13 +44,12 @@ connectDB();
 
 
 //Database routes
-app.use('/api', productRoutes);
-app.use('/api', userRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/admins', adminRoutes);
-
-//middleware
-app.use(cors());
-app.use(express.json());
+app.use('/api/discounts', discountRoutes);
+app.use('/api/brands', brandRoutes);
+app.use('/api/orders', orderRoutes);
 
 //Server static files from uploads folder
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));

@@ -4,10 +4,10 @@ const productController = require('../controllers/productController');
 const upload = require('../utils/multerConfig');
 
 
-router.post('/product', upload.array('productImg', 5), productController.createProduct);
-router.get('/products', productController.getAllProducts);
-router.get('/product/:productId', productController.getProductById);
-router.put('/product/:productId', upload.array('productImg', 5), productController.updateProductById);
-router.delete('/product/:productId', productController.deleteProductById);
+router.post('/', upload.array('productImg', 5), productController.createProduct);
+router.get('/', productController.getAllProducts);
+router.get('/:productId', productController.getProductById);
+router.put('/:productId', upload.array('productImg', 5), productController.updateProductById);
+router.delete('/:productId', productController.deleteProductById);
 
 module.exports = router;

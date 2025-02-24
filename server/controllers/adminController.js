@@ -1,57 +1,67 @@
 const asyncHandler = require('express-async-handler');
 const Admins = require('../models/Admins');
 
-exports.createAdmin = asyncHandler(async(req, res) => {
-    const {adminId,adminName,lastName,adminEmail,password} = res.body;
-    const existingAdmin = await Admins.findOne({userId: req.params.userId});
-    if (existingAdmin) {
-        res.status(400);
-        throw new Error("Admin with this id already exists");
+// ✅ Create Admin
+exports.createAdmins = asyncHandler(async (req, res) => {
+    const { adminId, adminName, lastName, adminEmail, password } = req.body; // ✅ FIXED req.body
+
+    if (!adminId || !adminName || !adminEmail || !password) {
+        return res.status(400).json({ message: "All fields are required." });
     }
-    const newAdmin = new Admins({adminId,adminName,lastName,adminEmail,password});
+
+    const existingAdmin = await Admins.findOne({ adminId }); // ✅ FIXED adminId check
+    if (existingAdmin) {
+        return res.status(400).json({ message: "Admin with this ID already exists." });
+    }
+
+    const newAdmin = new Admins({ adminId, adminName, lastName, adminEmail, password });
     await newAdmin.save();
 
-    res.status(201).json({message: "Admin created successfully", admin: newAdmin})
+    res.status(201).json({ message: "Admin created successfully", admin: newAdmin });
 });
 
-exports.getAllAdmin = asyncHandler(async(req, res) => {
+// ✅ Get All Admins
+exports.getAllAdmin = asyncHandler(async (req, res) => {
     const admins = await Admins.find();
-    res.status(200).json(admins)
+    res.status(200).json(admins);
 });
 
-exports.getAdminById = asyncHandler(async(req, res)=>{
-    const admin = await Admins.findOne({adminId: req.params.adminId});
+// ✅ Get Admin by ID
+exports.getAdminById = asyncHandler(async (req, res) => {
+    const admin = await Admins.findOne({ adminId: req.params.adminId });
     if (!admin) {
         res.status(404);
-        throw new Error('Admin not found please Check the adminId');
+        throw new Error("Admin not found. Please check the adminId.");
     }
-    res.status(200).json(admin)
+    res.status(200).json(admin);
 });
 
-exports.updateAdmin = asyncHandler(async(req,res)=>{
-    const admin = await Admins.findOne({adminId: req.params.adminId});
-    if(!admin) {
-        res.status(404)
-        throw new Error("Admin not Found to update!");
+// ✅ Update Admin
+exports.updateAdmin = asyncHandler(async (req, res) => {
+    const admin = await Admins.findOne({ adminId: req.params.adminId });
+    if (!admin) {
+        res.status(404);
+        throw new Error("Admin not found to update!");
     }
-    const {adminId,adminName,lastName,adminEmail,password} = req.body;
 
-    admin.adminId = adminId || admin.adminId;
+    const { adminName, lastName, adminEmail, password } = req.body;
+
     admin.adminName = adminName || admin.adminName;
     admin.lastName = lastName || admin.lastName;
     admin.adminEmail = adminEmail || admin.adminEmail;
-    admin.password = password || password;
+    admin.password = password || admin.password; // ✅ FIXED password update
 
     const updatedAdmin = await admin.save();
-    res.status(200).json({message: "admin Updated Successfully", admin: updatedAdmin});
+    res.status(200).json({ message: "Admin updated successfully", admin: updatedAdmin });
 });
 
-exports.deleteAdmin = asyncHandler(async(req, res) => {
-    const admin = await Admins.findOne({adminId:req.params.adminId});
+// ✅ Delete Admin
+exports.deleteAdmin = asyncHandler(async (req, res) => {
+    const admin = await Admins.findOne({ adminId: req.params.adminId });
     if (!admin) {
         res.status(404);
-        throw new Error("User not found to delete");
+        throw new Error("Admin not found to delete.");
     }
     await admin.deleteOne();
-    res.status(200).json({message:"User deleted successfully!"});
+    res.status(200).json({ message: "Admin deleted successfully!" });
 });
