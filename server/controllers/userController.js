@@ -26,7 +26,7 @@ exports.getUserById = asyncHandler(async (req, res) => {
 
 //CREATE
 exports.createUser = asyncHandler(async (req, res) => {
-   const {name, lastName,email,phoneNumber,password,numberOfOrders} = res.body;
+   const {name, lastName,email,phoneNumber,password,numberOfOrders} = req.body;
    const existingUser = await Users.findOne({phoneNumber});
    if (existingUser) {
     res.status(400);

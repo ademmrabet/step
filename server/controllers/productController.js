@@ -5,6 +5,10 @@ const mongoose = require('mongoose');
 
 // ✅ Function to generate a unique productId
 const generateProductId = (productName) => {
+    if (!productName || typeof productName !== 'string') {
+        throw new Error("Invalid productName: Must be a non-empty string.");
+    }
+    
     const letters = productName.replace(/[^a-zA-Z]/g, '').toUpperCase().substring(0, 3);
     const numbers = Math.floor(1000 + Math.random() * 9000);
     return letters + numbers;
@@ -19,18 +23,13 @@ exports.createProduct = asyncHandler(async (req, res) => {
     let brand;
     
     if (brandId) {
-        // If brandId is provided, use it directly
         if (!mongoose.Types.ObjectId.isValid(brandId)) {
             return res.status(400).json({ message: "Invalid brandId format" });
         }
         brand = await Brand.findById(brandId);
     } else if (brandName) {
-        // If brandName is provided, find by name (for backwards compatibility)
         brand = await Brand.findOne({ brandName });
-    } else {
-        // Neither provided
-        return res.status(400).json({ message: "Either brandId or brandName must be provided" });
-    }
+    }    
 
     // Check if brand exists
     if (!brand) {
@@ -40,6 +39,9 @@ exports.createProduct = asyncHandler(async (req, res) => {
                 : `Brand with name '${brandName}' not found. Please provide a valid brand.`
         });
     }
+    if (!productName) {
+        return res.status(400).json({ message: "Product name is required." });
+    }
 
     // Create new product
     const productId = generateProductId(productName);
@@ -47,7 +49,7 @@ exports.createProduct = asyncHandler(async (req, res) => {
         productId,
         productName,
         description,
-        brand: brand._id, // Store the brand's ObjectId for proper referencing
+        brand: brand ? brand._id : null, // Store the brand's ObjectId for proper referencing
         productImg,
         price,
         countInStock
