@@ -14,7 +14,7 @@ const generateOrderId = () => Math.floor(100000 + Math.random() * 900000).toStri
 const generateTempPassword = () => Math.random().toString(36).slice(-8);
 //Create Order Crud
 exports.createOrder = asyncHandler(async(req, res) => {
-    let {name, email, phoneNumber, orderItems, totalPrice, PaymentMethod, shippingAddress} = req.body;
+    let {name, lastName ,email, phoneNumber, orderItems, totalPrice, paymentMethod, shippingAddress} = req.body;
 
     let user = await User.findOne({phoneNumber});
 
