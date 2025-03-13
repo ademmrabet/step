@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const { fontFamily } = require("tailwindcss/defaultTheme");
+
 export default {
   content: [
     "./index.html",
@@ -6,13 +8,16 @@ export default {
   ],
   theme: {
     extend: {
-      fontFamily:{
-        inter:['inter', 'sans-serif'],
-        Lato : ['Lato', 'Sans-serif'],
-        Open: ['Open-sans', 'sans-serif']
-
+      fontFamily : {
+        Inter: ["Inter", "serif"],
+        Monomakh: ["Monomakh","serif"],
+        Bagel:["Bagel Fat One", "serif"],
+        Rubik:["Rubik Spray Paint", "serif"],
+        Modak:["Modak", "serif"]
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/typography"),
+  ],
 }

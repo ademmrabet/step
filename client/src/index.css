@@ -4,33 +4,7 @@
 
 
 body {
-    font-family: 'inter', sans-serif;
     width: 100dvw;
-    background-color: #dfdff0;
-    overflow-x: hidden;
-}
-
-@layer base {
-    @font-face {
-        font-family: 'inter';
-        src: url('/client/Public/fonts/Inter/Inter-VariableFont_opsz\,wght.ttf') format('ttf');
-    }
-    @font-face {
-        font-family: 'Lato';
-        src: url('/client/Public/fonts/Lato/Lato-Black.ttf') format('ttf');
-    }
-    @font-face {
-        font-family: 'Merriweather';
-        src: url('/client//Public/fonts/Merriweather_Sans/MerriweatherSans-VariableFont_wght.ttf') format('ttf');
-    }
-    @font-face {
-        font-family: 'Open_Sans';
-        src: url('/client/Public/fonts/Open_Sans/OpenSans-VariableFont_wdth\,wght.ttf') format('ttf');
-    }
-    @font-face {
-        font-family: 'DM_Sans';
-        src: url('/client/Public/fonts/DM_Sans/DMSans-VariableFont_opsz\,wght.ttf') format('ttf');
-    }
 }
 
 @layer utilities{
