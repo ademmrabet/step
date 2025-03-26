@@ -12,7 +12,11 @@ const brandSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    logo: {
+    logoWhite: {
+        type: String,
+        required: true
+    },
+    logoBlack: {
         type: String,
         required: true
     },

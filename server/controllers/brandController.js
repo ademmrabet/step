@@ -12,9 +12,12 @@ exports.createBrand = asyncHandler(async (req, res) => {
     const { brandName, description } = req.body;
 
     // Check if logo was uploaded
-    if (!req.file) {
-        return res.status(400).json({ message: "Brand logo is required." });
+    if (!req.files || (!req.files.logoWhite && !req.files.logoBlack)) {
+        return res.status(400).json({ message: "At least one brand logo is required." });
     }
+
+    const logoWhitePath = req.files?.logoWhite?.[0]?.path || "";
+    const logoBlackPath = req.files?.logoBlack?.[0]?.path || "";
 
     // Check if a brand with the same name already exists
     const existingBrandName = await Brand.findOne({ brandName });
@@ -36,7 +39,8 @@ exports.createBrand = asyncHandler(async (req, res) => {
         brandId,
         brandName,
         description,
-        logo: req.file.path // Store logo path
+        logoWhite: req.files.logoWhite[0].path,
+        logoBlack: req.files.logoBlack[0].path
     });
 
     await newBrand.save();
@@ -70,8 +74,13 @@ exports.updateBrandById = asyncHandler(async (req, res) => {
     brand.description = description || brand.description;
 
     //Update logo if a new image is uploaded
-    if (req.file) {
-        brand.logo = req.file.path;
+    if (req.files && req.files.length > 0) {
+        const newImages = req.files.map(file => file.path);
+        if (replaceImages === 'true') {
+            brand.logo = newImages; // Replace all images
+        } else {
+            brand.logo = [...brand.logo, ...newImages]; // Append new images
+        }
     }
 
     const updatedBrand = await brand.save();
